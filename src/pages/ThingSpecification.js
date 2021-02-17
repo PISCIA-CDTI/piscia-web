@@ -15,21 +15,22 @@ export const ThingSpecification = (props) => {
     const {thingPropData, handleDisconnect} = useContext(ThingPropertyContext);
     let location = useLocation();
     let { id } = useParams();
-    const thing = process.env.NODE_ENV === 'production' ? location.state.thing.replace(process.env.REACT_APP_DEV_API_URL,process.env.REACT_APP_PROD_API_URL)
-        : location.state.thing;
+    const thing = location.state.thing;
+    const thingId= process.env.NODE_ENV === 'production' ? thing.id.replace(process.env.REACT_APP_DEV_API_URL,process.env.REACT_APP_PROD_API_URL)
+        : thing.id;
 
     console.log(thing);
 
     const handleClickTimeline = (thingProp)=>{
         const fields = thing.id.split('/')
         handleDisconnect();
-        history.push('/things/'+ fields[fields.length-1]+'/timeline', {thingId: thing.id, property: thingProp});
+        history.push('/things/'+ fields[fields.length-1]+'/timeline', {thingId: thingId, property: thingProp});
     }
 
     const handleClickHistoricvalues = (thingProp) => {
         const fields = thing.id.split('/')
         handleDisconnect();
-        history.push('/things/'+ fields[fields.length-1]+'/historic', {thingId: thing.id, property: thingProp});
+        history.push('/things/'+ fields[fields.length-1]+'/historic', {thingId: thingId, property: thingProp});
     }
 
     const thingProprtiesView = thing.properties ? Object.keys(thing.properties).map((key, i) =>{
