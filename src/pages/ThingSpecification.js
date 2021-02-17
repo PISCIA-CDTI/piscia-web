@@ -15,7 +15,10 @@ export const ThingSpecification = (props) => {
     const {thingPropData, handleDisconnect} = useContext(ThingPropertyContext);
     let location = useLocation();
     let { id } = useParams();
-    let thing = location.state.thing;
+    const thing = process.env.NODE_ENV === 'production' ? location.state.thing.replace(process.env.REACT_APP_DEV_API_URL,process.env.REACT_APP_PROD_API_URL)
+        : location.state.thing;
+
+    console.log(thing);
 
     const handleClickTimeline = (thingProp)=>{
         const fields = thing.id.split('/')
